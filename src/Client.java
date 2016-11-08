@@ -24,7 +24,7 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 		finish.putBike();
-		System.out.println("Client ["+id+"] a reposé son velo au site : "+finish.getId());
+		System.out.println("Client ["+id+"] a repose son velo au site : "+finish.getId());
 	}
 	
 	public void run(){

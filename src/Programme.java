@@ -5,19 +5,19 @@ public class Programme {
 	private final static int STOCKMAX = 10;
 	private final static int UBOUND = 8;
 	private final static int LBOUND = 2;
-	private final static int NBSITES = 5;
-	private final static int NBBIKERS = 100;
+	private final static int NBSITES = 10;
+	private final static int NBBIKERS = 300;
 
 	public static void main(String[] args) {
 		System.out.println("DEBUT");
 		Site[] sites = new Site[NBSITES];
 		Client[] clients = new Client[NBBIKERS];
-		Camion marcel = new Camion(sites,UBOUND,LBOUND,clients);
+		Camion marcel = new Camion(sites);
 		int start;
 		int finish;
 		
 		for(int i = 0; i < NBSITES; i++){
-			sites[i] = new Site(i+1, STOCKINIT, STOCKMAX);
+			sites[i] = new Site(i+1, STOCKINIT, STOCKMAX, UBOUND, LBOUND);
 		}
 		
 		for(int i = 0; i < NBBIKERS; i++){
@@ -46,8 +46,11 @@ public class Programme {
 			}
 		}
 		
-		marcel.stopCamion();
+		System.out.println("FIN");
 		
+		for (int i = 0; i < sites.length; i++) {
+			System.out.println("Site ["+(i+1)+"] possede : "+sites[i].getStock());			
+		}
 	}
 
 }

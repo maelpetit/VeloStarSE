@@ -2,21 +2,14 @@
 public class Camion extends Thread {
 	
 	private Site[] sites;
-	private Client[] clients;
 	private int currentSite;
 	private int stock;
-	private int Ubound;
-	private int Lbound;
-	private boolean running;
 	
-	public Camion(Site[] Sites, int U, int L, Client[] c){
-		clients = c;
+	public Camion(Site[] Sites){
 		stock = 10;
 		sites = Sites;
 		currentSite = 0;
-		Ubound = U;
-		Lbound = L;
-		running = true;
+		this.setDaemon(true);
 	}
 	
 	
@@ -39,40 +32,35 @@ public class Camion extends Thread {
 				e.printStackTrace();
 			}
 		}
-		//System.out.println("Marcel se déplace du site ["+oldSite +"] au site ["+currentSite+"]");
+		//System.out.println("Marcel se dï¿½place du site ["+oldSite +"] au site ["+currentSite+"]");
 	}
 	
 	public void work(){
-		int stockSite = sites[currentSite-1].getStock();
-		int stockSiteOld = stockSite;
-		int stockSiteInit = sites[currentSite-1].getStockInit();
-		if(stockSite > Ubound){
-			while(sites[currentSite-1].getStock() > stockSiteInit){
-				sites[currentSite-1].takeBike();
-				stock++;
-				stockSite++;
-			}
-		}else if(stockSite < Lbound){
-			while(sites[currentSite-1].getStock() < stockSiteInit && stock > 0){
-				sites[currentSite-1].putBike();
-				stock--;
-				stockSite--;
-			}
-		}
-		//System.out.println("Marcel a transféré [" + (stockSiteOld - stockSite) + "] vélos au site [" + currentSite+"]");
+		sites[currentSite-1].enterCamion(this);
 	}
 	
 	public void run(){
-		while(running){
-			
+		while(true){
 			move();
 			work();
 		}
 	}
 
 
-	public void stopCamion() {
-		running = false;
-		System.out.println("FIN");
+	public int getStock() {
+		// TODO Auto-generated method stub
+		return stock;
+	}
+
+
+	public void addBike() {
+		// TODO Auto-generated method stub
+		stock++;
+	}
+
+
+	public void rmvBike() {
+		// TODO Auto-generated method stub
+		stock--;
 	}
 }
